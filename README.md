@@ -20,7 +20,7 @@ Note: please make sure that you change/modify commands according to your needs
     - mkdir PostgreSQL-10
 - Build PostgreSQL with your required features, and install it in directory which you have created in step 2
 - Clone git repository
-    - git clone https://github.com/2ndQuadrant/2uda-installer.git
+    - git clone https://github.com/2ndQuadrant/2uda.git
 - Create new directory(Builds) on root of the 2UDA repository
     - mkdir Builds
 - Create new sub-directories inside Builds directory(this will reflect platforms for which you are going to generate a new installer. Folder names should be the same as bellow) i,e
@@ -28,8 +28,10 @@ Note: please make sure that you change/modify commands according to your needs
     - Linux
     - MacOS
 - Copy your build inside particular folder(We will copy it inside Linux)
-    - cp -r 10/  Builds/Linux/
+    - cp -r PostgreSQL-10  Builds/Linux/
+
 Note: If you do not put build in specific folder then installbuilder will fail to generate installer.
+
 - Create a new directory inside Builds/Linux as Orange and put latest Orange binaries there
 - Open  installer-properties.sh file and modify it as per your needs
     - vim installer-properties.sh
