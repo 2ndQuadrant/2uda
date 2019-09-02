@@ -1,0 +1,19 @@
+[Unit]
+Description=2UDA PostgreSQL __PG_MAJOR_VERSION__
+After=syslog.target network.target
+
+[Service]
+Type=forking
+TimeoutSec=120
+
+User=postgres
+
+Environment=PGDATA=data_dir
+PIDFILE=data_dir/postmaster.pid
+
+ExecStart=pg_path/bin/pg_ctl -w start -D "data_dir" -o "-p pg_port" -l "data_dir/logfile"
+ExecStop=pg_path/bin/pg_ctl stop -m fast -w -D "data_dir"
+ExecReload=pg_path/bin/pg_ctl reload -D "data_dir"
+
+[Install]
+WantedBy=multi-user.target

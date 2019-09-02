@@ -1,0 +1,3 @@
+[submodule "codesign"]
+	path = codesign
+	url = https://github.com/2ndQuadrant/postgres-installer-private.git

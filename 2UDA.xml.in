@@ -1,0 +1,2320 @@
+<project>
+    <shortName>2UDA</shortName>
+    <fullName>2UDA - 2ndQuadrant Unified Data Analytics</fullName>
+    <version>__PG_MAJOR_VERSION__</version>
+    <installerFilename>${product_shortname}-__FULL_VERSION____EXTRA_VERSION_STRING__-__BUILD_NUMBER____DEV_TEST__-${platform_name}-installer.${platform_exec_suffix}</installerFilename>
+    <debugLevel>4</debugLevel>
+    <leftImage>${build_project_directory}/logos/2ndQLeftPanel.png</leftImage>
+    <logoImage>${build_project_directory}/logos/2ndQLogo.jpg</logoImage>
+    <splashImage>${build_project_directory}/logos/2ndQSplash.png</splashImage>
+    <allowLanguageSelection>1</allowLanguageSelection>
+    <enableDebugger>__DEBUG__</enableDebugger>
+    <installationScope>auto</installationScope>
+
+    <!-- Installer Size -->
+    <width>550</width>
+    <height>400</height>
+
+    <initializationActionList>
+
+        <setInstallerVariable name="slash" value="/" />
+
+        <setInstallerVariable name="slash" value="\" >
+            <ruleList>
+                <compareText logic="equals" text="${platform_name}" value="windows"/>
+            </ruleList>
+        </setInstallerVariable>
+
+    </initializationActionList>
+
+    <componentList>
+
+        <component>
+            <name>Installer_Scripts</name>
+            <description>Installer_Scripts</description>
+            <canBeEdited>0</canBeEdited>
+            <detailedDescription>Installs scripts required for setup</detailedDescription>
+            <selected>1</selected>
+            <show>0</show>
+            <folderList>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfilesosx</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>installer_scripts</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+            </folderList>
+        </component>
+
+        <component>
+            <name>sample</name>
+            <description>Sample Database</description>
+            <canBeEdited>0</canBeEdited>
+            <detailedDescription>SQL and CSVs for sample database</detailedDescription>
+            <selected>1</selected>
+            <show>0</show>
+            <folderList>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}/PostgreSQL-${product_version}</destination>
+                    <name>programfilesosx</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/sampledata</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+            </folderList>
+        </component>
+
+        <component>
+            <name>PostgreSQL</name>
+            <description>PostgreSQL ${product_version}</description>
+            <canBeEdited>0</canBeEdited>
+            <detailedDescription>${msg(description.postgres)}</detailedDescription>
+            <selected>0</selected>
+            <show>0</show>
+
+            <folderList>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfilesosx</name>
+                    <platforms>osx</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/MacOS/PostgreSQL-${product_version}</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileswin</name>
+                    <platforms>windows</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/Windows/PostgreSQL-${product_version}</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programileslinux</name>
+                    <platforms>linux-x64</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/Linux/PostgreSQL-${product_version}</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+            </folderList>
+
+            <parameterList>
+
+                <directoryParameter>
+                    <name>data_dir</name>
+                    <title>${msg(data_dir.title)}</title>
+                    <description>${msg(data_dir.description)}</description>
+                    <explanation>${msg(data_dir.explanation)}</explanation>
+                    <value>${installdir}/PostgreSQL-${product_version}/data</value>
+                    <default>${installdir}/PostgreSQL-${product_version}/data</default>
+                    <allowEmptyValue>0</allowEmptyValue>
+                    <mustBeWritable>1</mustBeWritable>
+                    <mustExist>0</mustExist>
+                    <width>30</width>
+                    <preShowPageActionList>
+                        <setInstallerVariable>
+                            <name>data_dir</name>
+                            <value>${env(PROGRAMDATA)}/${product_shortname}-${product_version}</value>
+                            <ruleList>
+                                <platformTest>
+                                    <type>windows</type>
+                                </platformTest>
+                            </ruleList>
+                        </setInstallerVariable>
+                    </preShowPageActionList>
+                    <validationActionList>
+                        <throwError>
+                            <text>${msg(data_dir.error)}</text>
+                            <ruleList>
+                                <fileTest>
+                                    <condition>is_empty</condition>
+                                    <negate>1</negate>
+                                    <path>${data_dir}</path>
+                                </fileTest>
+                                <fileExists>
+                                    <path>${data_dir}</path>
+                                </fileExists>
+                            </ruleList>
+                        </throwError>
+                    </validationActionList>
+                </directoryParameter>
+
+                <stringParameter>
+                    <name>pg_port</name>
+                    <title>${msg(summary.pg_port)}</title>
+                    <description>${msg(pg_port.description)}</description>
+                    <explanation>${msg(pg_port.explanation)}</explanation>
+                    <value>${freePort}</value>
+                    <default>${freePort}</default>
+                    <allowEmptyValue>0</allowEmptyValue>
+                    <width>30</width>
+                    <postShowPageActionList>
+                        <setInstallerVariable>
+                            <name>next_page</name>
+                            <value>pg_password</value>
+                        </setInstallerVariable>
+                        <setInstallerVariable>
+                            <name>back_page</name>
+                            <value>data_dir</value>
+                        </setInstallerVariable>
+                    </postShowPageActionList>
+                    <preShowPageActionList>
+                        <getFreePort>
+                            <variable>freePort</variable>
+                            <initialPort>5432</initialPort>
+                            <finalPort>65535</finalPort>
+                        </getFreePort>
+                    </preShowPageActionList>
+                    <validationActionList>
+                        <throwError>
+                            <text>${msg(pg_port.error)}</text>
+                            <ruleList>
+                                <portTest>
+                                    <condition>cannot_bind</condition>
+                                    <port>${pg_port}</port>
+                                </portTest>
+                            </ruleList>
+                        </throwError>
+                    </validationActionList>
+                </stringParameter>
+
+                <passwordParameter>
+                    <name>pg_password</name>
+                    <title>${msg(password.title)}</title>
+                    <description>${msg(password.description)}</description>
+                    <explanation></explanation>
+                    <value></value>
+                    <default></default>
+                    <allowEmptyValue>0</allowEmptyValue>
+                    <descriptionRetype>${msg(password.retype)}</descriptionRetype>
+                    <width>20</width>
+                    <postShowPageActionList>
+                        <setInstallerVariable>
+                            <name>next_page</name>
+                            <value>summary</value>
+                        </setInstallerVariable>
+                        <setInstallerVariable>
+                            <name>back_page</name>
+                            <value>pg_port</value>
+                        </setInstallerVariable>
+                    </postShowPageActionList>
+                    <preShowPageActionList>
+                        <setInstallerVariable>
+                            <name>back_page</name>
+                            <value>pg_port</value>
+                        </setInstallerVariable>
+                    </preShowPageActionList>
+                    <ruleList>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                </passwordParameter>
+
+		<infoParameter>
+                    <name>summary</name>
+                    <title>${msg(summary.title)}</title>
+                    <description></description>
+                    <explanation>${msg(summary.intro)} ${project.fullName} ${msg(summary.review)}</explanation>
+                    <value>${installdirsummary}${datadirsummary}${pgportsummary}${orangeSummary}${msg(summary.confirm)}</value>
+                     <postShowPageActionList>
+                        <setInstallerVariable name="next_page" value="installation"/>
+                        <setInstallerVariable name="back_page" value="pg_password"/>
+                    </postShowPageActionList>
+                    <preShowPageActionList>
+			<setInstallerVariable name="orangeSummary" value=""/>
+			<setInstallerVariable name="orangeSummary" value="${msg(summary.orangeInstallDir)}: ${installdir}${slash}Orange&#10;">
+                            <ruleList>
+                                <isTrue value="${component(orange).selected}"/>
+                            </ruleList>
+                        </setInstallerVariable>
+                        <setInstallerVariable name="back_page" value="pg_password"/>
+                        <setInstallerVariable name="installdirsummary" value="${msg(summary.installdir)}: ${installdir}&#10;" />
+                        <setInstallerVariable name="datadirsummary" value="${msg(data_dir.description)}: ${data_dir}&#10;" />
+                        <setInstallerVariable name="pgportsummary" value="${msg(summary.pg_port)}: ${pg_port}&#10;" />
+                    </preShowPageActionList>
+                </infoParameter>
+
+                <stringParameter>
+                    <name>server_ready</name>
+                    <description></description>
+                    <explanation></explanation>
+                    <value></value>
+                    <default></default>
+                    <allowEmptyValue>1</allowEmptyValue>
+                    <width>100</width>
+                </stringParameter>
+
+                <stringParameter>
+                    <name>xdg_location</name>
+                    <description></description>
+                    <explanation></explanation>
+                    <value></value>
+                    <default></default>
+                    <allowEmptyValue>1</allowEmptyValue>
+                    <ask>0</ask>
+                    <width>30</width>
+                </stringParameter>
+
+            </parameterList>
+
+            <postInstallationActionList>
+
+                <runProgram>
+                    <abortOnError>0</abortOnError>
+                    <explanation>Microsoft's redistributable runtime libraries (32-bit)</explanation>
+                    <program>${installdir}${slash}installer_scripts${slash}vcredist_x86.exe</program>
+                    <programArguments>/passive /norestart</programArguments>
+                    <progressText>${msg(progress.32bit_runtime)}</progressText>
+                    <showMessageOnError>0</showMessageOnError>
+                    <onErrorActionList>
+                        <throwError>
+                            <text>${msg(error.runtime_installation)}</text>
+                            <ruleList>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>5100</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>3010</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>1638</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                            </ruleList>
+                        </throwError>
+                    </onErrorActionList>
+                    <ruleList>
+                        <platformTest type="windows"/>
+                    </ruleList>
+                </runProgram>
+
+                <runProgram>
+                    <abortOnError>0</abortOnError>
+                    <explanation>Microsoft's redistributable runtime libraries (64-bit)</explanation>
+                    <program>${installdir}${slash}installer_scripts${slash}vcredist_x64.exe</program>
+                    <programArguments>/passive /norestart</programArguments>
+                    <progressText>${msg(progress.64bit_runtime)}</progressText>
+                    <showMessageOnError>0</showMessageOnError>
+                    <onErrorActionList>
+                        <throwError>
+                            <text>${msg(error.runtime_installation)}</text>
+                            <ruleList>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>5100</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>3010</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>1638</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                            </ruleList>
+                        </throwError>
+                    </onErrorActionList>
+                    <ruleList>
+                        <platformTest type="windows"/>
+                    </ruleList>
+                </runProgram>
+
+		<runProgram>
+                    <abortOnError>0</abortOnError>
+                    <explanation>Microsoft's redistributable runtime libraries 2013 (32-bit)</explanation>
+                    <program>${installdir}${slash}installer_scripts${slash}2013_vcredist_x86.exe</program>
+                    <programArguments>/passive /norestart</programArguments>
+                    <progressText>${msg(progress.32bit_runtime)}</progressText>
+                    <showMessageOnError>0</showMessageOnError>
+                    <onErrorActionList>
+                        <throwError>
+                            <text>${msg(error.runtime_installation)}</text>
+                            <ruleList>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>5100</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>3010</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>1638</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                            </ruleList>
+                        </throwError>
+                    </onErrorActionList>
+                    <ruleList>
+                        <platformTest type="windows"/>
+                    </ruleList>
+                </runProgram>
+
+		<runProgram>
+		    <abortOnError>0</abortOnError>
+                    <explanation>Microsoft's redistributable runtime libraries 2013 (64-bit)</explanation>
+                    <program>${installdir}${slash}installer_scripts${slash}2013_vcredist_x64.exe</program>
+                    <programArguments>/passive /norestart</programArguments>
+                    <progressText>${msg(progress.64bit_runtime)}</progressText>
+                    <showMessageOnError>0</showMessageOnError>
+                    <onErrorActionList>
+                        <throwError>
+                            <text>${msg(error.runtime_installation)}</text>
+                            <ruleList>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>5100</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>3010</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>1638</text>
+                                    <value>${program_exit_code}</value>
+                                </compareText>
+                            </ruleList>
+                        </throwError>
+                    </onErrorActionList>
+                    <ruleList>
+                        <platformTest type="windows"/>
+                    </ruleList>
+                </runProgram>
+
+                <addUser>
+                    <abortOnError>0</abortOnError>
+                    <explanation>${msg(info.createuser)}</explanation>
+                    <password>${pg_password}</password>
+                    <showMessageOnError>0</showMessageOnError>
+                    <username>postgres</username>
+                    <ruleList>
+                        <platformTest negate="1" type="windows"/>
+                    </ruleList>
+                </addUser>
+
+                <createDirectory>
+                    <explanation>${msg(info.createdatadir)}</explanation>
+                    <path>${data_dir}</path>
+                </createDirectory>
+
+		<actionGroup>
+			<progressText>Setting Windows ACL permissions on data dir</progressText>
+			<actionList>
+				<runProgram>
+					<program>icacls</program>
+					<programArguments>"${data_dir}" /inheritance:r</programArguments>
+				</runProgram>
+				<runProgram>
+					<program>icacls</program>
+					<programArguments>"${data_dir}" /T /Q /grant "${system_username}:(OI)(CI)F"</programArguments>
+				</runProgram>
+				<runProgram>
+					<program>icacls</program>
+					<programArguments>"${data_dir}" /T /Q /grant "*S-1-5-20:(OI)(CI)F"</programArguments>
+				</runProgram>
+				<runProgram>
+					<program>icacls</program>
+					<programArguments>"${data_dir}" /T /Q /grant "*S-1-3-0:(OI)(CI)F"</programArguments>
+				</runProgram>
+				<runProgram>
+					<program>icacls</program>
+					<programArguments>"${data_dir}" /T /Q /grant "*S-1-5-18:(OI)(CI)F"</programArguments>
+				</runProgram>
+				<runProgram>
+					<program>icacls</program>
+					<programArguments>"${data_dir}" /T /Q /grant "*S-1-5-32-544:(OI)(CI)F"</programArguments>
+				</runProgram>
+			</actionList>
+			<ruleList>
+				<compareText logic ="contains" text="${platform_name}" value="windows" />
+			</ruleList>
+		</actionGroup>
+
+                <changeOwnerAndGroup>
+                    <files>${data_dir}</files>
+                    <group></group>
+                    <owner>postgres</owner>
+                </changeOwnerAndGroup>
+
+                <runProgram>
+                    <explanation>Initializing PostgreSQL Server</explanation>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/initdb</program>
+                    <programArguments>-D "${data_dir}" -U postgres</programArguments>
+                    <progressText>${msg(progress.initdb)}</progressText>
+                    <runAs>postgres</runAs>
+                </runProgram>
+
+                <runProgram>
+                    <abortOnError>0</abortOnError>
+                    <program>${installdir}\PostgreSQL-${product_version}\bin\pg_ctl</program>
+                    <programArguments>unregister -N "2UDA PG ${product_version}"</programArguments>
+                    <showMessageOnError>0</showMessageOnError>
+                    <ruleList>
+                        <platformTest type="windows"/>
+                    </ruleList>
+                </runProgram>
+
+                <runProgram>
+                    <program>${installdir}\PostgreSQL-${product_version}\bin\pg_ctl</program>
+                    <programArguments>register -N "2UDA PG ${product_version}" -U "NT AUTHORITY\NetworkService" -D "${data_dir}" -o "-p ${pg_port}" -l "${data_dir}\logfile"</programArguments>
+                    <progressText>${msg(progress.register_service)}</progressText>
+                    <ruleList>
+                        <platformTest type="windows"/>
+                    </ruleList>
+                </runProgram>
+
+                <startWindowsService>
+                    <delay>15000</delay>
+                    <displayName></displayName>
+                    <progressText>${msg(progress.start_service)}</progressText>
+                    <serviceName>2UDA PG ${product_version}</serviceName>
+                </startWindowsService>
+
+                <createOSXService>
+                    <abandonProcessGroup>0</abandonProcessGroup>
+                    <groupname></groupname>
+                    <keepAlive>0</keepAlive>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/postgres</program>
+                    <programArguments>-D ${data_dir} -p ${pg_port}</programArguments>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <scope>system</scope>
+                    <serviceName>org.2ndQ.2UDA.postgresql-${product_version}</serviceName>
+                    <username>postgres</username>
+                </createOSXService>
+
+                <copyFile>
+                    <destination>${installdir}/PostgreSQL-${product_version}/postgresql.bin</destination>
+                    <origin>${installdir}/installer_scripts/postgresql.bin.in</origin>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </copyFile>
+
+                <substitute>
+                    <files>${installdir}/PostgreSQL-${product_version}/postgresql.bin</files>
+                    <type>exact</type>
+                    <ruleList>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>pg_home</pattern>
+                            <value>${installdir}/PostgreSQL-${product_version}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>data_dir_path</pattern>
+                            <value>${data_dir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>log_file</pattern>
+                            <value>${data_dir}/logfile</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>pg_port</pattern>
+                            <value>${pg_port}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+                <changePermissions>
+                    <files>${installdir}/PostgreSQL-${product_version}/postgresql.bin</files>
+                    <permissions>755</permissions>
+                </changePermissions>
+
+                <addUnixService>
+                    <description>Product description</description>
+                    <name>2UDA-PostgreSQL-${product_version}</name>
+                    <program>${installdir}/PostgreSQL-${product_version}/postgresql.bin</program>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </addUnixService>
+
+                <runProgram>
+                    <program>service</program>
+                    <programArguments>2UDA-PostgreSQL-${product_version} start</programArguments>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+
+                <substitute>
+                    <files>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</files>
+                    <type>exact</type>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>pg_path</pattern>
+                            <value>${installdir}/PostgreSQL-${product_version}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>data_dir</pattern>
+                            <value>${data_dir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>pg_port</pattern>
+                            <value>${pg_port}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+                <copyFile>
+                    <destination>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</destination>
+                    <origin>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</origin>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </copyFile>
+
+                <runProgram>
+                    <program>systemctl</program>
+                    <programArguments>enable 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+
+                <runProgram>
+                    <program>systemctl</program>
+                    <programArguments>start 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+
+                <runProgram>
+                    <explanation>Starting PostgreSQL Server</explanation>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/pg_ctl</program>
+                    <programArguments>-w -D "${data_dir}" -o "-p ${pg_port}" -l "${data_dir}/logfile" start </programArguments>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <runAs>postgres</runAs>
+                    <workingDirectory>${installdir}/PostgreSQL-${product_version}/bin</workingDirectory>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>windows</type>
+                        </platformTest>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+                </runProgram>
+
+                <while>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <actionList>
+                        <setInstallerVariableFromScriptOutput>
+                            <abortOnError>0</abortOnError>
+                            <exec>${installdir}/PostgreSQL-${product_version}/bin/pg_isready</exec>
+                            <execArgs>-p ${pg_port}</execArgs>
+                            <name>server_ready</name>
+                            <showMessageOnError>0</showMessageOnError>
+                            <onErrorActionList>
+                                <continue/>
+                            </onErrorActionList>
+                        </setInstallerVariableFromScriptOutput>
+                    </actionList>
+                    <conditionRuleList>
+                        <compareText>
+                            <logic>contains</logic>
+                            <negate>1</negate>
+                            <nocase>1</nocase>
+                            <text>${server_ready}</text>
+                            <value>accepting</value>
+                        </compareText>
+                    </conditionRuleList>
+                </while>
+
+                <substitute>
+                    <files>${installdir}/PostgreSQL-${product_version}/sampledata/sample.sql</files>
+                    <type>exact</type>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>/path/to</pattern>
+                            <value>${installdir}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+                <runProgram>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/createdb</program>
+                    <programArguments>-U postgres -p ${pg_port} sample</programArguments>
+                </runProgram>
+
+                <runProgram>
+                    <explanation>${msg(info.installsample)}</explanation>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/psql</program>
+                    <programArguments>-U postgres -p ${pg_port} -d sample -f ../sampledata/sample.sql</programArguments>
+                </runProgram>
+
+                <substitute>
+                    <files>${installdir}/installer_scripts/org.2ndQ.2UDA.info</files>
+                    <type>regexp</type>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>install_dir</pattern>
+                            <value>${installdir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>pg_port</pattern>
+                            <value>${pg_port}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>data_dir</pattern>
+                            <value>${data_dir}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+                <actionGroup>
+                    <actionList>
+                        <createDirectory>
+                            <path>/Library/Application Support/2ndQ</path>
+                        </createDirectory>
+                        <copyFile>
+                            <destination>/Library/Application Support/2ndQ/org.2ndQ.2UDA.info</destination>
+                            <origin>${installdir}/installer_scripts/org.2ndQ.2UDA.info</origin>
+                        </copyFile>
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+                </actionGroup>
+
+                <actionGroup>
+                    <actionList>
+                        <registrySet>
+                            <key>HKEY_LOCAL_MACHINE\SOFTWARE\${project.vendor}\${project.fullName}-${product_version}</key>
+                            <name>Data</name>
+                            <type>REG_SZ</type>
+                            <value>${data_dir}</value>
+                        </registrySet>
+                        <registrySet>
+                            <key>HKEY_LOCAL_MACHINE\SOFTWARE\${project.vendor}\${project.fullName}-${product_version}</key>
+                            <name>Port</name>
+                            <type>REG_SZ</type>
+                            <value>${pg_port}</value>
+                        </registrySet>
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                </actionGroup>
+
+                <actionGroup>
+
+                    <actionList>
+
+                        <setInstallerVariableFromRegEx>
+                            <name>xdg_location</name>
+                            <pattern>(\/[^:]+).+$</pattern>
+                            <substitution></substitution>
+                            <text>${env(XDG_DATA_DIRS)}</text>
+                        </setInstallerVariableFromRegEx>
+
+                        <setInstallerVariable>
+                            <name>xdg_location</name>
+                            <value>${xdg_location}/2ndQ</value>
+                            <ruleList>
+                                <compareText>
+                                    <logic>does_not_equal</logic>
+                                    <text>${xdg_location}</text>
+                                    <value></value>
+                                </compareText>
+                            </ruleList>
+                        </setInstallerVariable>
+
+                        <setInstallerVariable>
+                            <name>xdg_location</name>
+                            <value>/usr/local/share/2ndQ</value>
+                            <ruleList>
+                                <compareText>
+                                    <logic>equals</logic>
+                                    <text>${xdg_location}</text>
+                                    <value></value>
+                                </compareText>
+                            </ruleList>
+                        </setInstallerVariable>
+
+                        <createDirectory>
+                            <path>${xdg_location}</path>
+                        </createDirectory>
+
+                        <copyFile>
+                            <destination>${xdg_location}</destination>
+                            <origin>${installdir}/installer_scripts/org.2ndQ.2UDA.info</origin>
+                        </copyFile>
+
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>linux</type>
+                        </platformTest>
+                    </ruleList>
+
+                </actionGroup>
+
+		<setInstallerVariable>
+                    <name>servicename</name>
+                    <value>org.2ndQ.2UDA.postgresql-${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>servicename</name>
+                    <value>2UDA PG ${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>servicename</name>
+                    <value>2UDA-PostgreSQL-${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>linux</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>		
+
+            </postInstallationActionList>
+
+            <preUninstallationActionList>
+                
+		<actionGroup>
+                    <progressText>Remove OSX Service</progressText>
+
+                    <actionList>
+                        <stopOSXService>
+                            <progressText>${msg(progress.stop_server)}</progressText>
+                            <serviceName>org.2ndQ.2UDA.postgresql-${product_version}</serviceName>
+                        </stopOSXService>
+                        <deleteOSXService>
+                            <scope>system</scope>
+                            <serviceName>org.2ndQ.2UDA.postgresql-${product_version}</serviceName>
+                        </deleteOSXService>
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Remove Windows Service</progressText>
+                    <actionList>
+                        <stopWindowsService>
+                            <delay>15000</delay>
+                            <displayName></displayName>
+                            <progressText>${msg(progress.stop_server)}</progressText>
+                            <serviceName>2UDA PG ${product_version}</serviceName>
+                        </stopWindowsService>
+                        <runProgram>
+                            <explanation>Unregistering Windows PostgreSQL ${product_version} service</explanation>
+                            <program>${installdir}\PostgreSQL-${product_version}\bin\pg_ctl</program>
+                            <programArguments>unregister -N "2UDA PG ${product_version}"</programArguments>
+                            <progressText>${msg(progress.unregister_service)}</progressText>
+                        </runProgram>
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Remove Debian Service</progressText>
+                    <actionList>
+                        <runProgram>
+                            <program>service</program>
+                            <programArguments>2UDA-PostgreSQL-${product_version} stop</programArguments>
+                            <progressText>${msg(progress.stop_server)}</progressText>
+                        </runProgram>
+                        <removeUnixService>
+                            <name>2UDA-PostgreSQL-${product_version}</name>
+                        </removeUnixService>
+                    </actionList>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Remove Service For non-Debian distros</progressText>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <actionList>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>stop 2UDA-PostgreSQL-${product_version}</programArguments>
+                        </runProgram>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>disable 2UDA-PostgreSQL-${product_version}</programArguments>
+                        </runProgram>
+                        <deleteFile>
+                            <path>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</path>
+                        </deleteFile>
+                        <deleteFile>
+                            <path>/etc/systemd/system/multi-user.target.wants/2UDA-PostgreSQL-${product_version}.service</path>
+                        </deleteFile>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>daemon-reload</programArguments>
+                        </runProgram>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>reset-failed</programArguments>
+                        </runProgram>
+                    </actionList>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </actionGroup>
+
+                <runProgram>
+                    <explanation>Stopping the database server</explanation>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/pg_ctl</program>
+                    <programArguments>-D "${data_dir}"  -l "${data_dir}/logfile" stop</programArguments>
+                    <progressText>${msg(progress.stop_server)}</progressText>
+                    <runAs>postgres</runAs>
+                    <workingDirectory>${installdir}/PostgreSQL-${product_version}/bin/</workingDirectory>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+
+                </runProgram>
+
+            </preUninstallationActionList>
+
+        </component>
+
+        <component>
+            <name>PostgreSQL_upgrade</name>
+            <description>PostgreSQL ${product_version} Upgrade</description>
+            <canBeEdited>0</canBeEdited>
+            <detailedDescription>${msg(description.postgres)}</detailedDescription>
+            <selected>0</selected>
+            <show>0</show>
+
+            <folderList>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfilesosx</name>
+                    <platforms>osx</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/MacOS/PostgreSQL-${product_version}</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileswin</name>
+                    <platforms>windows</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/Windows/PostgreSQL-${product_version}</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programileslinux</name>
+                    <platforms>linux-x64</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/Linux/PostgreSQL-${product_version}</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+            </folderList>
+
+            <parameterList>
+
+		<labelParameter>
+
+                    <name>installation_detected</name>
+                    <title>${msg(existing.title)}</title>
+                    <description></description>
+                    <explanation>${msg(existing.explanation)} 
+${msg(existing.location)}: ${installdir}
+${msg(data_dir.title)}:    ${data_dir}
+${msg(pg_port.title)}:     ${pg_port} 
+${msg(existing.upgraded)}</explanation>
+                    <ask>0</ask>
+                    <image></image>
+                    <postShowPageActionList>
+			<setInstallerVariable name="project.installationType" value="upgrade"/>
+                        <setInstallerVariable>
+                            <name>next_page</name>
+                            <value>components</value>
+                        </setInstallerVariable>
+		    </postShowPageActionList>
+
+                </labelParameter>		
+
+                <stringParameter>
+                    <name>install_type</name>
+                    <description></description>
+                    <explanation></explanation>
+                    <value></value>
+                    <default></default>
+                    <allowEmptyValue>1</allowEmptyValue>
+                    <ask>0</ask>
+                    <width>30</width>
+                </stringParameter>
+
+                <stringParameter>
+                    <name>service_availability</name>
+                    <description></description>
+                    <explanation></explanation>
+                    <value></value>
+                    <default></default>
+                    <allowEmptyValue>1</allowEmptyValue>
+                    <ask>0</ask>
+                    <width>30</width>
+                </stringParameter>
+
+            </parameterList>
+
+            <postInstallationActionList>
+
+                <addUser>
+                    <abortOnError>0</abortOnError>
+                    <explanation>${msg(info.createuser)}</explanation>
+                    <password>${pg_password}</password>
+                    <showMessageOnError>0</showMessageOnError>
+                    <username>postgres</username>
+                    <ruleList>
+                        <platformTest negate="1" type="windows"/>
+                    </ruleList>
+                </addUser>
+
+                <createDirectory>
+                    <explanation>${msg(info.createdatadir)}</explanation>
+                    <path>${data_dir}</path>
+                </createDirectory>
+
+                <changeOwnerAndGroup>
+                    <files>${data_dir}</files>
+                    <group></group>
+                    <owner>postgres</owner>
+                </changeOwnerAndGroup>
+
+                <startWindowsService>
+                    <delay>15000</delay>
+                    <displayName></displayName>
+                    <progressText>${msg(progress.start_service)}</progressText>
+                    <serviceName>2UDA PG ${product_version}</serviceName>
+                </startWindowsService>
+
+                <createOSXService>
+                    <abandonProcessGroup>0</abandonProcessGroup>
+                    <groupname></groupname>
+                    <keepAlive>0</keepAlive>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/postgres</program>
+                    <programArguments>-D ${data_dir} -p ${pg_port}</programArguments>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <scope>system</scope>
+                    <serviceName>org.2ndQ.2UDA.postgresql-${product_version}</serviceName>
+                    <username>postgres</username>
+                </createOSXService>
+
+                <copyFile>
+                    <destination>${installdir}/PostgreSQL-${product_version}/postgresql.bin</destination>
+                    <origin>${installdir}/installer_scripts/postgresql.bin.in</origin>
+		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </copyFile>
+
+                <substitute>
+                    <files>${installdir}/PostgreSQL-${product_version}/postgresql.bin</files>
+                    <type>exact</type>
+                    <ruleList>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>pg_home</pattern>
+                            <value>${installdir}/PostgreSQL-${product_version}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>data_dir_path</pattern>
+                            <value>${data_dir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>log_file</pattern>
+                            <value>${data_dir}/logfile</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>pg_port</pattern>
+                            <value>${pg_port}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+                <changePermissions>
+                    <files>${installdir}/PostgreSQL-${product_version}/postgresql.bin</files>
+                    <permissions>755</permissions>
+                </changePermissions>
+
+                <addUnixService>
+                    <description>Product description</description>
+                    <name>2UDA-PostgreSQL-${product_version}</name>
+                    <program>${installdir}/PostgreSQL-${product_version}/postgresql.bin</program>
+		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </addUnixService>
+
+                <runProgram>
+                    <program>service</program>
+                    <programArguments>2UDA-PostgreSQL-${product_version} start</programArguments>
+                    <progressText>${msg(progress.start_server)}</progressText>
+		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+
+                <substitute>
+                    <files>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</files>
+                    <type>exact</type>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>pg_path</pattern>
+                            <value>${installdir}/PostgreSQL-${product_version}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>data_dir</pattern>
+                            <value>${data_dir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>pg_port</pattern>
+                            <value>${pg_port}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+                <copyFile>
+                    <destination>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</destination>
+                    <origin>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</origin>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </copyFile>
+
+                <runProgram>
+                    <program>systemctl</program>
+                    <programArguments>enable 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+
+                <runProgram>
+                    <program>systemctl</program>
+                    <programArguments>start 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+
+                <runProgram>
+                    <explanation>Starting PostgreSQL Server</explanation>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/pg_ctl</program>
+                    <programArguments>-w -D "${data_dir}" -o "-p ${pg_port}" -l "${data_dir}/logfile" start </programArguments>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <runAs>postgres</runAs>
+                    <workingDirectory>${installdir}/PostgreSQL-${product_version}/bin</workingDirectory>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>windows</type>
+                        </platformTest>
+                        <platformTest>
+                            <negate>1</negate>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+                </runProgram>
+
+                <while>
+                    <progressText>${msg(progress.start_server)}</progressText>
+                    <actionList>
+                        <setInstallerVariableFromScriptOutput>
+                            <abortOnError>0</abortOnError>
+                            <exec>${installdir}/PostgreSQL-${product_version}/bin/pg_isready</exec>
+                            <execArgs>-p ${pg_port}</execArgs>
+                            <name>server_ready</name>
+                            <showMessageOnError>0</showMessageOnError>
+                            <onErrorActionList>
+                                <continue/>
+                            </onErrorActionList>
+                        </setInstallerVariableFromScriptOutput>
+                    </actionList>
+                    <conditionRuleList>
+                        <compareText>
+                            <logic>contains</logic>
+                            <negate>1</negate>
+                            <nocase>1</nocase>
+                            <text>${server_ready}</text>
+                            <value>accepting</value>
+                        </compareText>
+                    </conditionRuleList>
+                </while>
+
+                <runProgram>
+                    <abortOnError>0</abortOnError>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/psql</program>
+                    <programArguments>-U postgres -p ${pg_port} -d sample -c "CREATE EXTENSION tsm_system_time"</programArguments>
+                    <showMessageOnError>0</showMessageOnError>
+                </runProgram>
+
+                <runProgram>
+                    <abortOnError>0</abortOnError>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/psql</program>
+                    <programArguments>-U postgres -p ${pg_port} -d sample -c "CREATE EXTENSION quantile"</programArguments>
+                    <showMessageOnError>0</showMessageOnError>
+                </runProgram>
+
+		<setInstallerVariable>
+                    <name>servicename</name>
+                    <value>org.2ndQ.2UDA.postgresql-${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>servicename</name>
+                    <value>2UDA PG ${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>servicename</name>
+                    <value>2UDA-PostgreSQL-${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>linux</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>
+
+            </postInstallationActionList>
+
+            <readyToInstallActionList>
+
+                <actionGroup>
+                    <progressText>Remove OSX Service</progressText>
+
+                    <actionList>
+                        <stopOSXService>
+                            <progressText>${msg(progress.stop_server)}</progressText>
+                            <serviceName>org.2ndQ.2UDA.postgresql-${product_version}</serviceName>
+                        </stopOSXService>
+
+                        <deleteOSXService>
+                            <scope>system</scope>
+                            <serviceName>org.2ndQ.2UDA.postgresql-${product_version}</serviceName>
+                        </deleteOSXService>
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>osx</type>
+                        </platformTest>
+                    </ruleList>
+
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Stopping the database server</progressText>
+
+                    <actionList>
+                        <stopWindowsService>
+                            <delay>15000</delay>
+                            <displayName></displayName>
+                            <progressText>${msg(progress.stop_server)}</progressText>
+                            <serviceName>2UDA PG ${product_version}</serviceName>
+                        </stopWindowsService>
+                    </actionList>
+                    <ruleList>
+                        <platformTest>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+
+                </actionGroup>
+
+		<actionGroup>
+				<progressText>Setting Windows ACL permissions on data dir</progressText>
+                                <actionList>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}" /inheritance:r</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}"  /remove:g Users</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}"  /remove:g Everyone</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}" /T /Q /grant "${system_username}:(OI)(CI)F"</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}" /T /Q /grant "*S-1-5-20:(OI)(CI)F"</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}" /T /Q /grant "*S-1-3-0:(OI)(CI)F"</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}" /T /Q /grant "*S-1-5-18:(OI)(CI)F"</programArguments>
+                                        </runProgram>
+                                        <runProgram>
+                                                <program>icacls</program>
+                                                <programArguments>"${data_dir}" /T /Q /grant "*S-1-5-32-544:(OI)(CI)F"</programArguments>
+                                        </runProgram>
+                                </actionList>
+                                <ruleList>
+                                        <compareText logic ="contains" text="${platform_name}" value="windows" />
+                                </ruleList>
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Remove Debian Service</progressText>
+
+                    <actionList>
+                        <runProgram>
+                            <program>service</program>
+                            <programArguments>2UDA-PostgreSQL-${product_version} stop</programArguments>
+                            <progressText>${msg(progress.stop_server)}</progressText>
+                        </runProgram>
+                        <removeUnixService>
+                            <name>2UDA-PostgreSQL-${product_version}</name>
+                        </removeUnixService>
+                    </actionList>
+
+		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Remove Service For non-Debian distros</progressText>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+
+                    <actionList>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>stop 2UDA-PostgreSQL-${product_version}</programArguments>
+                        </runProgram>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>disable 2UDA-PostgreSQL-${product_version}</programArguments>
+                        </runProgram>
+                        <deleteFile>
+                            <path>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</path>
+                        </deleteFile>
+                        <deleteFile>
+                            <path>/etc/systemd/system/multi-user.target.wants/2UDA-PostgreSQL-${product_version}.service</path>
+                        </deleteFile>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>daemon-reload</programArguments>
+                        </runProgram>
+                        <runProgram>
+                            <program>systemctl</program>
+                            <programArguments>reset-failed</programArguments>
+                        </runProgram>
+                    </actionList>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+
+                </actionGroup>
+
+                <runProgram>
+                    <explanation>Stopping the database server</explanation>
+                    <program>${installdir}/PostgreSQL-${product_version}/bin/pg_ctl</program>
+                    <programArguments>-D "${data_dir}"  -l "${data_dir}/logfile" stop</programArguments>
+                    <progressText>${msg(progress.stop_server)}</progressText>
+                    <runAs>postgres</runAs>
+                    <workingDirectory>${installdir}/PostgreSQL-${product_version}/bin/</workingDirectory>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <negate>1</negate>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                        <platformTest>
+                            <type>linux</type>
+                        </platformTest>
+                    </ruleList>
+                </runProgram>
+
+            </readyToInstallActionList>
+
+        </component>
+
+        <component>
+            <name>orange</name>
+            <description>Orange</description>
+            <canBeEdited>1</canBeEdited>
+            <detailedDescription>${msg(description.orange)}</detailedDescription>
+            <selected>1</selected>
+            <show>1</show>
+
+	    <desktopShortcutList>
+                <shortcut>
+                    <comment>Launch Orange</comment>
+                    <name>2UDA Orange</name>
+                    <runAsAdmin>0</runAsAdmin>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}\Orange\Python34\pythonw.exe</windowsExec>
+                    <windowsExecArgs>-m Orange.canvas</windowsExecArgs>
+                    <windowsIcon>${installdir}\Orange\Python34\share\Orange\canvas\icons\orange.ico</windowsIcon>
+                    <windowsPath>${installdir}\Orange\Python34\</windowsPath>
+                </shortcut>
+            </desktopShortcutList>
+
+            <folderList>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfilesosx</name>
+                    <platforms>osx</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/MacOS/Orange</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileswin</name>
+                    <platforms>windows</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/Windows/Orange</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileslinux</name>
+                    <platforms>linux-x64</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>${build_project_directory}/Builds/Linux/Orange</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+
+                </folder>
+
+            </folderList>
+
+        </component>
+
+        <component>
+            <name>readme</name>
+            <description>README</description>
+            <canBeEdited>0</canBeEdited>
+            <selected>1</selected>
+            <show>0</show>
+
+            <folderList>
+                <folder>
+                    <description>Docs</description>
+                    <destination>${installdir}</destination>
+                    <name>docs</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>${build_project_directory}/README.txt</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
+            </folderList>
+
+	    <postInstallationActionList>
+
+		<substitute>
+                    <files>${installdir}${slash}README.txt</files>
+                    <type>exact</type>
+                    <substitutionList>
+                        <substitution>
+                            <pattern>_INSTALLATIONPATH_</pattern>
+                            <value>${installdir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>_DATADIRPATH_</pattern>
+                            <value>${data_dir}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>_PGPORT_</pattern>
+                            <value>${pg_port}</value>
+                        </substitution>
+                        <substitution>
+                            <pattern>_SERVICENAME_</pattern>
+                            <value>${servicename}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
+	    </postInstallationActionList>
+
+        </component>
+
+    </componentList>
+
+    <preInstallationActionList>
+
+        <setInstallerVariable>
+            <name>install_type</name>
+            <value>install</value>
+        </setInstallerVariable>
+
+        <actionGroup>
+            <progressText>Install type is 'upgrade'</progressText>
+
+            <actionList>
+
+                <setInstallerVariable>
+                    <name>install_type</name>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <value>upgrade</value>
+                    <ruleList>
+                        <osxServiceTest>
+                            <condition>exists</condition>
+                            <service>org.2ndQ.2UDA.postgresql-${product_version}</service>
+                        </osxServiceTest>
+                        <windowsServiceTest>
+                            <condition>exists</condition>
+                            <service>2UDA PG ${product_version}</service>
+                        </windowsServiceTest>
+                    </ruleList>
+                </setInstallerVariable>
+
+                <actionGroup>
+                    <progressText>Check Debian</progressText>
+
+	                <actionList>
+
+                        <setInstallerVariableFromScriptOutput>
+                            <abortOnError>0</abortOnError>
+                            <exec>service</exec>
+                            <execArgs>2UDA-PostgreSQL-${product_version} status</execArgs>
+                            <name>service_availability</name>
+                            <showMessageOnError>0</showMessageOnError>
+                            <onErrorActionList>
+                                <setInstallerVariable>
+                                    <name>install_type</name>
+                                    <value>install</value>
+                                </setInstallerVariable>
+                            </onErrorActionList>
+
+                        </setInstallerVariableFromScriptOutput>
+
+                        <setInstallerVariable>
+                            <name>install_type</name>
+                            <value>upgrade</value>
+                            <ruleList>
+                                <compareText>
+                                    <logic>contains</logic>
+                                    <negate>1</negate>
+                                    <nocase>1</nocase>
+                                    <text>${service_availability}</text>
+                                    <value>unrecognized</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>equals</logic>
+                                    <negate>1</negate>
+                                    <text>${service_availability}</text>
+                                    <value></value>
+                                </compareText>
+                            </ruleList>
+                        </setInstallerVariable>
+
+                    </actionList>
+		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>debian</value>
+                        </compareText>
+			<compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>ubuntu</value>
+                        </compareText>
+                    </ruleList>
+
+                </actionGroup>
+
+                <actionGroup>
+                    <progressText>Check non-Debian</progressText>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+
+                    <actionList>
+
+                        <setInstallerVariableFromScriptOutput>
+                            <abortOnError>0</abortOnError>
+                            <exec>systemctl</exec>
+                            <execArgs>status 2UDA-PostgreSQL-${product_version}.service</execArgs>
+                            <name>service_availability</name>
+                            <showMessageOnError>0</showMessageOnError>
+                            <onErrorActionList>
+                                <setInstallerVariable>
+                                    <name>install_type</name>
+                                    <value>install</value>
+                                </setInstallerVariable>
+                            </onErrorActionList>
+                        </setInstallerVariableFromScriptOutput>
+
+                        <setInstallerVariable>
+                            <name>install_type</name>
+                            <value>upgrade</value>
+                            <ruleList>
+                                <compareText>
+                                    <logic>contains</logic>
+                                    <negate>1</negate>
+                                    <nocase>1</nocase>
+                                    <text>${service_availability}</text>
+                                    <value>not-found</value>
+                                </compareText>
+                                <compareText>
+                                    <logic>equals</logic>
+                                    <negate>1</negate>
+                                    <text>${service_availability}</text>
+                                    <value></value>
+                                </compareText>
+                            </ruleList>
+                        </setInstallerVariable>
+
+                        <setInstallerVariable>
+                            <name>install_type</name>
+                            <value>install</value>
+                            <ruleList>
+                                <compareText>
+                                    <logic>contains</logic>
+                                    <nocase>1</nocase>
+                                    <text>${service_availability}</text>
+                                    <value>not-found</value>
+                                </compareText>
+                            </ruleList>
+                        </setInstallerVariable>
+
+                    </actionList>
+                    <ruleList>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>redhat</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>suse</value>
+                        </compareText>
+                        <compareText>
+                            <logic>equals</logic>
+                            <text>${linux_distribution}</text>
+                            <value>fedora</value>
+                        </compareText>
+                    </ruleList>
+
+                </actionGroup>
+
+            </actionList>
+
+        </actionGroup>
+
+        <actionGroup>
+            <progressText>Component Selection - Upgrade</progressText>
+
+            <actionList>
+                <componentSelection>
+                    <deselect>PostgreSQL</deselect>
+                    <select>PostgreSQL_upgrade</select>
+                </componentSelection>
+                <setInstallerVariable>
+                    <name>project.component(PostgreSQL_upgrade).canBeEdited</name>
+                    <value>1</value>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>project.component(PostgreSQL).show</name>
+                    <value>0</value>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>next_page</name>
+                    <value>installation_detected</value>
+                </setInstallerVariable>
+            </actionList>
+            <ruleList>
+                <compareText>
+                    <logic>equals</logic>
+                    <text>${install_type}</text>
+                    <value>upgrade</value>
+                </compareText>
+            </ruleList>
+
+        </actionGroup>
+
+        <actionGroup>
+            <progressText>Component Selection - Install</progressText>
+
+            <actionList>
+                <componentSelection>
+                    <deselect>PostgreSQL_upgrade</deselect>
+                    <select>PostgreSQL</select>
+                </componentSelection>
+                <setInstallerVariable>
+                    <name>project.component(PostgreSQL_upgrade).show</name>
+                    <value>0</value>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>project.component(PostgreSQL).show</name>
+                    <value>1</value>
+                </setInstallerVariable>
+                <setInstallerVariable>
+                    <name>next_page</name>
+                    <value>installdir</value>
+                </setInstallerVariable>
+            </actionList>
+            <ruleList>
+                <compareText>
+                    <logic>equals</logic>
+                    <text>${install_type}</text>
+                    <value>install</value>
+                </compareText>
+            </ruleList>
+
+        </actionGroup>
+        <actionGroup>
+            <progressText>OSX - Get existing installation info</progressText>
+
+            <actionList>
+                <xmlFileGet>
+                    <attribute></attribute>
+                    <element>/installdetails/installdir</element>
+                    <file>/Library/Application Support/2ndQ/org.2ndQ.2UDA.info</file>
+                    <variable>installdir</variable>
+                </xmlFileGet>
+                <xmlFileGet>
+                    <attribute></attribute>
+                    <element>/installdetails/pgport</element>
+                    <file>/Library/Application Support/2ndQ/org.2ndQ.2UDA.info</file>
+                    <variable>pg_port</variable>
+                </xmlFileGet>
+                <xmlFileGet>
+                    <attribute></attribute>
+                    <element>/installdetails/datadir</element>
+                    <file>/Library/Application Support/2ndQ/org.2ndQ.2UDA.info</file>
+                    <variable>data_dir</variable>
+                </xmlFileGet>
+            </actionList>
+
+            <ruleList>
+                <platformTest>
+                    <type>osx</type>
+                </platformTest>
+                <compareText>
+                    <logic>equals</logic>
+                    <text>${install_type}</text>
+                    <value>upgrade</value>
+                </compareText>
+                <fileExists>
+                    <path>/Library/Application Support/2ndQ/org.2ndQ.2UDA.info</path>
+                </fileExists>
+            </ruleList>
+        </actionGroup>
+
+        <actionGroup>
+            <progressText>Windows - Get existing installation info</progressText>
+
+            <actionList>
+                <registryGet>
+                    <key>HKEY_LOCAL_MACHINE\SOFTWARE\${project.vendor}\${project.fullName}-${product_version}</key>
+                    <name>Location</name>
+                    <variable>installdir</variable>
+                </registryGet>
+                <registryGet>
+                    <key>HKEY_LOCAL_MACHINE\SOFTWARE\${project.vendor}\${project.fullName}-${product_version}</key>
+                    <name>Port</name>
+                    <variable>pg_port</variable>
+                </registryGet>
+                <registryGet>
+                    <key>HKEY_LOCAL_MACHINE\SOFTWARE\${project.vendor}\${project.fullName}-${product_version}</key>
+                    <name>Data</name>
+                    <variable>data_dir</variable>
+                </registryGet>
+            </actionList>
+            <ruleList>
+                <platformTest>
+                    <type>windows</type>
+                </platformTest>
+                <compareText>
+                    <logic>equals</logic>
+                    <text>${install_type}</text>
+                    <value>upgrade</value>
+                </compareText>
+            </ruleList>
+        </actionGroup>
+
+        <actionGroup>
+            <progressText>Linux - Get existing installation info</progressText>
+
+            <actionList>
+                <xmlFileGet>
+                    <attribute></attribute>
+                    <element>/installdetails/installdir</element>
+                    <file>/usr/local/share/2ndQ/org.2ndQ.2UDA.info</file>
+                    <variable>installdir</variable>
+                </xmlFileGet>
+                <xmlFileGet>
+                    <attribute></attribute>
+                    <element>/installdetails/pgport</element>
+                    <file>/usr/local/share/2ndQ/org.2ndQ.2UDA.info</file>
+                    <variable>pg_port</variable>
+                </xmlFileGet>
+                <xmlFileGet>
+                    <attribute></attribute>
+                    <element>/installdetails/datadir</element>
+                    <file>/usr/local/share/2ndQ/org.2ndQ.2UDA.info</file>
+                    <variable>data_dir</variable>
+                </xmlFileGet>
+            </actionList>
+
+            <ruleList>
+                <platformTest>
+                    <type>linux</type>
+                </platformTest>
+                <compareText>
+                    <logic>equals</logic>
+                    <text>${install_type}</text>
+                    <value>upgrade</value>
+                </compareText>
+            </ruleList>
+
+        </actionGroup>
+
+    </preInstallationActionList>
+
+    <postInstallationActionList>
+
+        <deleteFile>
+            <path>${installdir}/installer_scripts</path>
+            <progressText>Removing temp files</progressText>
+        </deleteFile>
+
+	<setInstallerVariable>
+            <name>project.allowAddRemoveComponents</name>
+            <value>1</value>
+        </setInstallerVariable>
+
+    </postInstallationActionList>
+
+    <allowComponentSelection>1</allowComponentSelection>
+    <allowedLanguages>en de es it fr sl</allowedLanguages>
+    <createOsxBundleZip>1</createOsxBundleZip>
+    <enableRollback>1</enableRollback>
+    <enableTimestamp>1</enableTimestamp>
+    <installationLogFile>${installdir}/install.log</installationLogFile>
+    <osxDmgBackgroundImage>${build_project_directory}/logos/2ndQLeftPanel.png</osxDmgBackgroundImage>
+    <osxUninstallerApplicationBundleIcon>${build_project_directory}/logos/2ndQLeftPanel.png</osxUninstallerApplicationBundleIcon>
+    <osxSigningPkcs12File>${build_project_directory}/codesign/signing/osx-signing.p12</osxSigningPkcs12File>
+    <osxSigningPkcs12Password>${env(OSX_SIGNING_PASSWORD)}</osxSigningPkcs12Password>
+    <windowsSigningPkcs12File>${build_project_directory}/codesign/signing/windows-signing.pfx</windowsSigningPkcs12File>
+    <windowsSigningPkcs12Password>${env(WINDOWS_SIGNING_PASSWORD)}</windowsSigningPkcs12Password>
+    <windowsSigningTimestampServer>http://timestamp.verisign.com/scripts/timstamp.dll</windowsSigningTimestampServer>
+    <windowsSigningTimestampFormat>authenticode</windowsSigningTimestampFormat>
+    <overwritePolicy>onlyIfNewer</overwritePolicy>
+    <requireInstallationByRootUser>1</requireInstallationByRootUser>
+    <saveRelativePaths>1</saveRelativePaths>
+    <singleInstanceCheck>1</singleInstanceCheck>
+    <splashScreenDelay>5500</splashScreenDelay>
+    <uninstallerName>Uninstall${product_version}</uninstallerName>
+    <vendor>2ndQuadrant</vendor>
+
+    <customLanguageFileList>
+        <language>
+            <code>fr</code>
+            <encoding>utf-8</encoding>
+            <file>language/custom-fr.lng</file>
+        </language>
+        <language>
+            <code>en</code>
+            <file>language/custom-en.lng</file>
+        </language>
+        <language>
+            <code>de</code>
+            <encoding>utf-8</encoding>
+            <file>language/custom-de.lng</file>
+        </language>
+        <language>
+            <code>es</code>
+            <encoding>utf-8</encoding>
+            <file>language/custom-es.lng</file>
+        </language>
+        <language>
+            <code>it</code>
+            <encoding>utf-8</encoding>
+            <file>language/custom-it.lng</file>
+        </language>
+        <language>
+            <code>sl</code>
+            <encoding>utf-8</encoding>
+            <file>language/custom-sl.lng</file>
+        </language>
+    </customLanguageFileList>
+
+    <finalPageActionList>
+
+        <readFile>
+            <name>readme_contents</name>
+            <path>${installdir}${slash}README.txt</path>
+            <show>0</show>
+        </readFile>
+
+        <showText>
+            <progressText>Show readme file</progressText>
+            <text>${readme_contents}</text>
+            <title>Readme</title>
+        </showText>
+
+    </finalPageActionList>
+
+    <parameterList>
+
+        <directoryParameter>
+            <name>installdir</name>
+            <description>Installer.Parameter.installdir.description</description>
+            <explanation>Installer.Parameter.installdir.explanation</explanation>
+            <value></value>
+            <default>${platform_install_prefix}/${product_shortname}-${product_version}</default>
+            <allowEmptyValue>0</allowEmptyValue>
+            <ask>yes</ask>
+            <cliOptionName>prefix</cliOptionName>
+            <mustBeWritable>yes</mustBeWritable>
+            <mustExist>0</mustExist>
+            <osxBundlesAreFiles>1</osxBundlesAreFiles>
+            <width>30</width>
+            <preShowPageActionList>
+                <setInstallerVariable>
+                    <name>installdir</name>
+                    <value>${env(PROGRAMFILES)}/${product_shortname}-${product_version}</value>
+                    <ruleList>
+                        <platformTest>
+                            <type>windows</type>
+                        </platformTest>
+                    </ruleList>
+                </setInstallerVariable>
+            </preShowPageActionList>
+            <ruleList>
+                <compareText>
+                    <logic>equals</logic>
+                    <text>${install_type}</text>
+                    <value>install</value>
+                </compareText>
+            </ruleList>
+
+        </directoryParameter>
+
+    </parameterList>
+
+</project>

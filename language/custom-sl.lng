@@ -1,0 +1,45 @@
+summary.title=Povzetek namestitve
+summary.intro=Namestili boste
+summary.review=Prosimo preglejte spodnje podatke
+summary.installdir=Namestitveni direktorij
+summary.pg_port=Vrata PostgreSQL
+summary.confirm=Pritisnite naprej, če so podatki pravilni
+
+data_dir.title=Direktorij s podatki
+data_dir.description=Direktorij s podatki PostgreSQL
+data_dir.explanation=Namestitveni program bo inicializiral podatkovno bazo PostgreSQL v tem direktoriju. Če direktorij že obstaja, mora biti prazen.
+data_dir.error=Izbrani direktorij že obstaja in ni prazen.
+
+pg_port.title=PG Port
+pg_port.description=Vrata strežnika PostgreSQL
+pg_port.explanation=Namestitveni program bo inicializiral podatkovni strežnik PostgreSQL na teh vratih (Pusti nespremenjeno, če nisi prepričan, kaj vpisati)
+pg_port.error=Izbrana vrata so že uporabljena
+
+progress.32bit_runtime=Nameščam 32-bitne knjižnice
+progress.64bit_runtime=Nameščam 64-bitne knjižnice
+progress.initdb=Inicializacija baze (to lahko traja nekaj časa)
+progress.register_service=Registracija storitev
+progress.unregister_service=Deregistracija storitev
+progress.start_service=Zaganjanje strežnika PostgreSQL
+progress.start_server=Zaganjanje strežnika
+progress.stop_server=Ustavljanje strežnika podatkovne baze
+progress.server_consolidation=Čakam na konsolidacijo strežnika ...
+ 
+description.postgres=Najnaprednejša odprtokodna podatkovna baza z več kot 15 leti aktivnega razvoja in naprednimi funkcijami, primernimi tudi za poslovno rabo.
+description.orange=Učinkovita in zanimiva vizualizacija podatkov za začetnike in eksperte: vizualno in skriptno podatkovno rudarjenje, komponente za strojno učenje ter dodatki za bioinformatiko in analizo besedil.
+description.libreoffice=Najboljša zbirka pisarniških orodij na tržišču. Postanite še ustvarjalnejši in produktivnejši.
+
+existing.title=Namestitev zaznana
+existing.explanation=Obstoječa namestitev zaznana.
+existing.location=Lokacija
+existing.upgraded=PostgreSQL bo posodobljen.
+
+password.title=Geslo postgres uporabnika
+password.description=Prosimo vnesite geslo postgres uporabnika
+password.retype=Ponovno vnesite geslo
+
+info.createuser=Ustvarjanje uporabnika 'postgres'
+info.createdatadir=Ustvarjanje podatkovnega direktorija za PostgreSQL strežnik
+info.installsample=Nameščanje vzorčne baze
+
+error.runtime_installation=Neznana napaka med namestitvijo knjižnic izvajalnega okolja

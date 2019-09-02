@@ -1,0 +1,48 @@
+#!/bin/bash
+# This is used for starting up the PostgreSQL
+# server
+
+# processname: postgres
+# pidfile: postmaster.pid
+#
+
+case "$1" in
+start)
+    # Check for postgres already running...
+    server_status=`sudo su postgres -c 'pg_home/bin/pg_ctl -D data_dir_path -o " -p pg_port" -l log_file status'`
+    if [[ $server_status == *"server is running"* ]]
+    then
+        echo "Server already running."
+    else
+        rm -f /tmp/.s.PGSQL.* > /dev/null
+        echo  "Starting postgresql service: "
+        sudo su postgres -c 'pg_home/bin/pg_ctl -D data_dir_path -w -o " -p pg_port" -l log_file start'
+        sleep 3
+        server_status=`sudo su postgres -c 'pg_home/bin/pg_ctl -D data_dir_path -o " -p pg_port" -l log_file status'`
+        if [[ $server_status == *"server is running"* ]]
+        then
+            echo ""
+        else
+            echo "Server start failed."
+        fi
+    fi
+;;
+stop)
+    echo "Stopping postgresql service: "
+    sudo su postgres -c 'pg_home/bin/pg_ctl -D data_dir_path -o " -p pg_port" -l log_file stop'
+    sleep 2
+    echo
+;;
+status)
+    sudo su postgres -c 'pg_home/bin/pg_ctl -D data_dir_path -o " -p pg_port" status'
+;;
+restart)
+    $0 stop
+    $0 start
+;;
+*)
+    echo "Usage: postgresql {start|stop|status|restart}"
+    exit 1
+esac
+
+exit 0

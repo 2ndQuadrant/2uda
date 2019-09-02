@@ -1,0 +1,45 @@
+summary.title=Die Installation, zusammengefasst
+summary.intro=Es wird nun installiert
+summary.review=Bitte die untenstehenden Angaben prüfen
+summary.installdir=Installationsverzeichnis
+summary.pg_port=PostgreSQL Port
+summary.confirm=Wenn die Angaben korrekt sind, weiter drücken
+
+data_dir.title=Datenverzeichnis
+data_dir.description=PostgreSQL Datenverzeichnis
+data_dir.explanation=Das Installationsprogramm wird die PostgreSQL-Datenbank in diesem Verzeichnis initialisieren. Fall das Verzeichnis bereits existiert, muss es leer sein.
+data_dir.error=Das angegebene Verzeichnis existiert, aber ist nicht leer
+
+pg_port.title=PG Port
+pg_port.description=PostgreSQL Server Port
+pg_port.explanation=Das Installationsprogramm wird den PostgreSQL-Datenbankserver mit diesem Port initialisieren (nur bei Bedarf ändern)
+pg_port.error=Der angegebene Port wird bereits verwendet
+
+progress.32bit_runtime=32bit Laufzeit-Bibliotheken werden installiert
+progress.64bit_runtime=64bit Laufzeit-Bibliotheken werden installiert
+progress.initdb=Datenbank wird initialisiert
+progress.register_service=Windows-Dienst wird installiert
+progress.unregister_service=Windows-Dienst wird deinstalliert
+progress.start_service=PostgreSQL-Dienst wird gestartet
+progress.start_server=Server startet
+progress.stop_server=Server wird angehalten
+progress.server_consolidation=Warte, bis Server bereit ist
+
+description.postgres=Die fortschrittlichste Open Source Datenbank mit mehr als 15 Jahren aktiver Entwicklung, mit ausgeklügelten Features und Enterprise-Fähigkeiten.
+description.orange=Ausführliche Datenvisualisierung for Anfänger und Experten: graphisches und geskriptetes Data Mining, Komponenten für Maschinen-Lernen und zusätzliche Module für Bioinformatik und Text Mining.
+description.libreoffice=Die leistungsfähige Office Suite hilft Ihnen, creativer und produktiver zu sein.
+
+existing.title=bestehende Installation erkannt
+existing.explanation=Eine bestehende Installation wurde gefunden.
+existing.location=Ort
+existing.upgraded=Diese Instanz von PostgreSQL wird upgegraded.
+
+password.title=Passwort für Benutzer Postgres
+password.description=Bitte das Passwort für Benutzer Postgres eingeben
+password.retype=Passwort erneut eingeben
+
+info.createuser=Erzeuge 'postgres' Benutzer
+info.createdatadir=Erzeuge das Datenverzeichnis für den PostgreSQL Server
+info.installsample=Intalliere Beispieldatenbank
+
+error.runtime_installation=Unbekannter Fehler bei der Installation von Laufzeitbibliotheken (runtime libraries)

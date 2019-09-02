@@ -1,0 +1,5 @@
+<installdetails>
+	<installdir>install_dir</installdir>
+	<pgport>pg_port</pgport>
+	<datadir>data_dir</datadir>
+</installdetails>

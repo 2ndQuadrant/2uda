@@ -1,0 +1,46 @@
+summary.title=Récapitulatif de l'Installation
+summary.intro=L'installation va démarrer
+summary.review=Merci de relire les informations ci-dessous
+summary.installdir=Répertoire de l'installation
+summary.pg_port=Port d'écoute de PostgreSQL
+summary.confirm=Cliquez sur « suivant » si les informations sont correctes
+
+data_dir.title=Répertoire de données (Data Directory)
+data_dir.description=Répertoire de données de PostgreSQL (Data Directory)
+data_dir.explanation=L'installeur va initialiser PostgreSQL dans ce répertoire. Si le répertoire existe déjà, il doit être vide.
+data_dir.error=Le répertoire indiqué existe déjà et n'est pas vide.
+
+pg_port.title=PG Port
+pg_port.description=Port du Serveur PostgreSQL
+pg_port.explanation=Le programme d'installation va initialiser le serveur de base de données PostgreSQL sur ce port (Ne rien saisir en cas d'incertitude)
+pg_port.error=Le port spécifié est déjà en cours d'utilisation
+
+
+progress.32bit_runtime=Installation des librairies 32-bit pour le runtime en cours.
+progress.64bit_runtime=Installation des librairies 64-bit pour le runtime en cours.
+progress.initdb=Initialisation de la base de données (cela peut prendre un certain temps)
+progress.register_service=Enregistrement du service Windows en cours
+progress.unregister_service=Suppression de l'enregistrement du service Windows en cours
+progress.start_service=Démarrage du service PostgreSQL en cours
+progress.start_server=Démarrage du serveur en cours
+progress.stop_server=Arrêt du serveur de bases de données en cours
+progress.server_consolidation=En attente de la consolidation du serveur ...
+ 
+description.postgres=La base de données Open Source la plus avancée du monde, avec plus de 15 ans de développement actif ayant fourni des fonctionnalités sophistiquées dans un produit pour adapté aux usages des entreprises.
+description.orange=La visualisation de données pour les novices et les experts, incluant de la recherche visuelle ou scripée (data mining), des composants d'apprentissage automatique (machine learning) et des extras dans les domaines de la bio-informatique et de la recherche textuelle.
+description.libreoffice=La suite Office la plus puissante du marché afin de profiter au mieux de votre créativité et d'améliorer votre productivité.
+
+existing.title=Installation Détectée
+existing.explanation=Une installation pré-existante a été détéctée.
+existing.location=Emplacement
+existing.upgraded=L'instance PostgreSQL va être mise à jour.
+
+password.title=Mot de Passe Postgres
+password.description=Merci d'entrer le mot de passe de l'utilisateur postgres
+password.retype=Entrer à nouveau le mot de passe
+
+info.createuser=Création de l'utilisateur 'postgres'
+info.createdatadir=Création du dossier des données pour le serveur PostgreSQL
+info.installsample=Installation de la base de données de démo.
+
+error.runtime_installation=Erreur inconnue lors de l'installation des bibliothèques

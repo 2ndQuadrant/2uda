@@ -1,0 +1,45 @@
+summary.title=Resumen de la Instalación
+summary.intro=Está a punto de instalar
+summary.review=Por favor, revise la siguiente información
+summary.installdir=Directorio de instalación
+summary.pg_port=Puerto de PostgreSQL
+summary.confirm=Haga clic en Siguiente si la información en correcta
+
+data_dir.title=Directorio de datos
+data_dir.description=Directorio de datos de PostgreSQL
+data_dir.explanation=El instalador inicializará la base de datos PostgreSQL en este directorio. Si ya existe, este directorio debe estar vacío.
+data_dir.error=El directorio de datos especificado ya existe y no está vacío
+
+pg_port.title=PG Port
+pg_port.description=Puerto del servidor PostgreSQL
+pg_port.explanation=El instalador inicializará el servidor de base de datos PostgreSQL con este puerto (Deje sin modificar si no está seguro qué ingresar)
+pg_port.error=El puerto especificado ya está en uso
+
+progress.32bit_runtime=Instalando runtime de 32 bits
+progress.64bit_runtime=Instalando runtime de 64 bits
+progress.initdb=Inicializando la base de datos (esto puede tomar un tiempo)
+progress.register_service=Registrando servicio de Windows
+progress.unregister_service=Eliminando el registro del servicio de Windows
+progress.start_service=Iniciando servicio de PostgreSQL
+progress.start_server=Iniciando el servidor
+progress.stop_server=Deteniendo el servidor de base de datos
+progress.server_consolidation=Esperando que el servidor se consolide ...
+ 
+description.postgres=La base de datos de código abierto más avanzada del mundo, con más de 15 años de desarrollo activo, que cuenta con características sofisticadas y está lista para el ambiente empresarial.
+description.orange=Visualización útil y divertida de datos para novatos y expertos, que incluye: minería de datos visual y por script, componentes para aprendizaje automático, y extensiones para bioinformática y minería de textos
+description.libreoffice=La suite ofimática más potente en el mercado que le ayuda a desatar su creatividad y hacer crecer su productividad
+
+existing.title=Instalación previa
+existing.explanation=Se detectó una instalación existente.
+existing.location=Ubicación
+existing.upgraded=Esta instancia de PostgreSQL será actualizada.
+
+password.title=Contraseña del Usuario postgres
+password.description=Por favor, ingrese la contraseña del usuario postgres
+password.retype=Reingrese la contraseña
+
+info.createuser=Creando el usuario 'postgres'
+info.createdatadir=Creando el directorio de datos para el servidor PostgreSQL
+info.installsample=Instalando la base de datos de ejemplo
+
+error.runtime_installation=Error desconocido en instalación de bibliotecas de ejecución

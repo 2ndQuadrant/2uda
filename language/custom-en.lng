@@ -1,0 +1,46 @@
+summary.title=Installation Summary
+summary.intro=You are about to install
+summary.review=Please review the below information
+summary.installdir=Installation Directory
+summary.pg_port=PostgreSQL Port
+summary.confirm=Click next if the information is correct
+summary.orangeInstallDir=Installation directory for Orange
+
+data_dir.title=Data Directory
+data_dir.description=PostgreSQL Data Directory
+data_dir.explanation=Installer will initialize the PostgreSQL database in this directory. If it already exists, this directory must be empty. 
+data_dir.error=The specified data directory already exists and is not empty
+
+pg_port.title=PostgreSQL Port
+pg_port.description=PostgreSQL Server Port
+pg_port.explanation=The installer will initialize the PostgreSQL database server with this port (leave as-is if you are unsure what to enter)
+pg_port.error=The specified port is already in use
+
+progress.32bit_runtime=Installing 32-bit runtime libraries
+progress.64bit_runtime=Installing 64-bit runtime libraries
+progress.initdb=Initializing Database (this may take a while)
+progress.register_service=Registering Windows service
+progress.unregister_service=Unregistering Windows service
+progress.start_service=Starting PostgreSQL service
+progress.start_server=Starting up the server
+progress.stop_server=Stopping the database server
+progress.server_consolidation=Waiting for server to consolidate ...
+
+description.postgres=The world's most advanced open source database with more than 15 years of active development boasting sophisticated features and enterprise readiness.
+description.orange=Fruitful and fun data visualization for novice and experts featuring: visual and scripted data mining, components for machine learning, and add-ons for bioinformatics and text mining
+description.libreoffice=The most powerful office suite on the market that helps you unleash your creativity and grow your productivity
+
+existing.title=Installation Detected
+existing.explanation=An existing installation was detected.
+existing.location=Location
+existing.upgraded=This instance of PostgreSQL will be upgraded.
+
+password.title=Postgres User Password
+password.description=Please enter the postgres user password
+password.retype=Re-enter password
+
+info.createuser=Creating 'postgres' user
+info.createdatadir=Creating data directory for PostgreSQL server
+info.installsample=Installing sample database
+
+error.runtime_installation=Unknown error during installation of runtime libraries

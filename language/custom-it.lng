@@ -1,0 +1,45 @@
+summary.title=Riepilogo Installazione
+summary.intro=L'installazione sta per iniziare
+summary.review=Si prega di verificare le seguenti informazioni
+summary.installdir=Directory di installazione
+summary.pg_port=Porta di PostgreSQL
+summary.confirm=Selezionare "Avanti" se l'informazione è corretta
+
+data_dir.title=Directory dei dati
+data_dir.description=Directory dei dati di PostgreSQL
+data_dir.explanation=Il programma di installazione inizializzerà il database PostgreSQL in questa directory. Se la directory esiste già, deve essere vuota.
+data_dir.error=La directory dei dati esiste già e non è vuota
+
+pg_port.title=Porta di PostgreSQL
+pg_port.description=Porta del server PostgreSQL
+pg_port.explanation=Il programma di installazione inizializzerà il server di database PostgreSQL con questa porta (Lasciate così com'è se non sapete cosa inserire)
+pg_port.error=La porta specificata è già in uso
+
+progress.32bit_runtime=Installazione delle librerie runtime a 32 bit in corso
+progress.64bit_runtime=Installazione delle librerie runtime a 64 bit in corso
+progress.initdb=Il database viene inizializzato (potrebbe richiedere un po' di tempo)
+progress.register_service=Registrazione del servizio Windows
+progress.unregister_service=Deregistrazione del servizio Windows
+progress.start_service=Avvio del servizio PostgreSQL
+progress.start_server=Avvio del server
+progress.stop_server=Arresto del server di database
+progress.server_consolidation=In attesa del consolidamento del server...
+ 
+description.postgres=Il database open source più avanzato del mondo, con più di 15 anni di sviluppo attivo, che vanta funzionalità sofisticate ed è pronto per il mondo Enterprise.
+description.orange=Visualizzazione dei dati divertente e produttiva, per principianti o esperti, grazie a: data mining visivo e con script; componenti per apprendimento automatico, e add-on per bioinformatica e data mining testuale.
+description.libreoffice=La più potente suite per l'ufficio sul mercato, che vi aiuta a liberare la creatività e accrescere la produttività.
+
+existing.title=Installazione Rilevata
+existing.explanation=È stata rilevata una installazione precedente.
+existing.location=Posizione
+existing.upgraded=Questa istanza di PostgreSQL sarà aggiornata.
+
+password.title=Password Utente Postgres
+password.description=Inserire la password dell'utente postgres
+password.retype=Re-enter password
+
+info.createuser=Creazione utente 'postgres'
+info.createdatadir=Creazione data directory per il server PostgreSQL
+info.installsample=Installazione del database d'esempio
+
+error.runtime_installation=Errore sconosciuto durante l'installazione delle librerie di runtime
