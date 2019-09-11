@@ -114,15 +114,15 @@ CREATE TABLE sample_cars (
     car_name             VARCHAR(64)
 );
 
-COPY sample_customers    FROM '/path/to/PostgreSQL-11/sampledata/Customers.csv'    WITH CSV HEADER;
-COPY sample_employees    FROM '/path/to/PostgreSQL-11/sampledata/Employees.csv'    WITH CSV HEADER;
-COPY sample_offices      FROM '/path/to/PostgreSQL-11/sampledata/Offices.csv'      WITH CSV HEADER;
-COPY sample_orderdetails FROM '/path/to/PostgreSQL-11/sampledata/OrderDetails.csv' WITH CSV HEADER;
-COPY sample_orders       FROM '/path/to/PostgreSQL-11/sampledata/Orders.csv'       WITH CSV HEADER;
-COPY sample_payments     FROM '/path/to/PostgreSQL-11/sampledata/Payments.csv'     WITH CSV HEADER;
-COPY sample_products     FROM '/path/to/PostgreSQL-11/sampledata/Products.csv'     WITH CSV HEADER;
-COPY sample_wine         FROM '/path/to/PostgreSQL-11/sampledata/Wine.csv'         WITH CSV HEADER;
-COPY sample_cars         FROM '/path/to/PostgreSQL-11/sampledata/Cars.csv'         WITH CSV HEADER;
+COPY sample_customers    FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Customers.csv'    WITH CSV HEADER;
+COPY sample_employees    FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Employees.csv'    WITH CSV HEADER;
+COPY sample_offices      FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Offices.csv'      WITH CSV HEADER;
+COPY sample_orderdetails FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/OrderDetails.csv' WITH CSV HEADER;
+COPY sample_orders       FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Orders.csv'       WITH CSV HEADER;
+COPY sample_payments     FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Payments.csv'     WITH CSV HEADER;
+COPY sample_products     FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Products.csv'     WITH CSV HEADER;
+COPY sample_wine         FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Wine.csv'         WITH CSV HEADER;
+COPY sample_cars         FROM '/path/to/PostgreSQL-_PG_MAJOR_VERSION_/sampledata/Cars.csv'         WITH CSV HEADER;
 
 CREATE EXTENSION tsm_system_time;
 CREATE EXTENSION quantile; 
