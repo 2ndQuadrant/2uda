@@ -45,15 +45,15 @@ fi
 # Copy .xml.in as .xml
 cp 2UDA.xml.in 2UDA.xml || echo "Error in creating 2UDA.xml"
 
-# Copy 2UDA-PostgreSQL.service as 2UDA-PostgreSQL-$__PG_MAJOR_VERSION__.service - where $__PG_MAJOR_VERSION__ wil be from properties.sh file
-cp installer_scripts/2UDA-PostgreSQL.service installer_scripts/2UDA-PostgreSQL-$__PG_MAJOR_VERSION__.service
+# Copy 2uda-postgresql.service as 2uda-postgresql-$__PG_MAJOR_VERSION__.service - where $__PG_MAJOR_VERSION__ wil be from properties.sh file
+cp installer_scripts/2uda-postgresql.service installer_scripts/2uda-postgresql-$__PG_MAJOR_VERSION__.service
 
 <<COMENT
 Calling Replace function to replace versions placeholders with orignal values in .xml & .service files
 Syntax - Replace $find $replace $file
 COMENT
 
-Replace __PG_MAJOR_VERSION__     $__PG_MAJOR_VERSION__      installer_scripts/2UDA-PostgreSQL-$__PG_MAJOR_VERSION__.service || (echo "Error in setting PostgreSQL major version in .service file exit now ..." && exit 1)
+Replace __PG_MAJOR_VERSION__     $__PG_MAJOR_VERSION__      installer_scripts/2uda-postgresql-$__PG_MAJOR_VERSION__.service || (echo "Error in setting PostgreSQL major version in .service file exit now ..." && exit 1)
 Replace __PG_MAJOR_VERSION__     $__PG_MAJOR_VERSION__      2UDA.xml || (echo "Error: Setting PostgreSQL major version in .xml file exit now ..." && exit 1)
 Replace __FULL_VERSION__         $__FULL_VERSION__          2UDA.xml || (echo "Error: Setting PostgreSQL full version in .xml file exit now ..."  && exit 1)
 Replace __EXTRA_VERSION_STRING__ $__EXTRA_VERSION_STRING__  2UDA.xml || (echo "Error: Setting extra version string in .xml file exit now ..."     && exit 1)

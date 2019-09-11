@@ -575,7 +575,7 @@
 
                 <addUnixService>
                     <description>Product description</description>
-                    <name>2UDA-PostgreSQL-${product_version}</name>
+                    <name>2uda-postgresql-${product_version}</name>
                     <program>${installdir}/PostgreSQL-${product_version}/postgresql.bin</program>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
@@ -594,7 +594,7 @@
 
                 <runProgram>
                     <program>service</program>
-                    <programArguments>2UDA-PostgreSQL-${product_version} start</programArguments>
+                    <programArguments>2uda-postgresql-${product_version} start</programArguments>
                     <progressText>${msg(progress.start_server)}</progressText>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
@@ -612,7 +612,7 @@
                 </runProgram>
 
                 <substitute>
-                    <files>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</files>
+                    <files>${installdir}/installer_scripts/2uda-postgresql-${product_version}.service</files>
                     <type>exact</type>
                     <substitutionList>
                         <substitution>
@@ -631,8 +631,8 @@
                 </substitute>
 
                 <copyFile>
-                    <destination>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</destination>
-                    <origin>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</origin>
+                    <destination>/etc/systemd/system/2uda-postgresql-${product_version}.service</destination>
+                    <origin>${installdir}/installer_scripts/2uda-postgresql-${product_version}.service</origin>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
                         <compareText>
@@ -655,7 +655,7 @@
 
                 <runProgram>
                     <program>systemctl</program>
-                    <programArguments>enable 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <programArguments>enable 2uda-postgresql-${product_version}.service</programArguments>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
                         <compareText>
@@ -678,7 +678,7 @@
 
                 <runProgram>
                     <program>systemctl</program>
-                    <programArguments>start 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <programArguments>start 2uda-postgresql-${product_version}.service</programArguments>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
                         <compareText>
@@ -926,7 +926,7 @@
                 </setInstallerVariable>
                 <setInstallerVariable>
                     <name>servicename</name>
-                    <value>2UDA-PostgreSQL-${product_version}</value>
+                    <value>2uda-postgresql-${product_version}</value>
                     <ruleList>
                         <platformTest>
                             <type>linux</type>
@@ -987,11 +987,11 @@
                     <actionList>
                         <runProgram>
                             <program>service</program>
-                            <programArguments>2UDA-PostgreSQL-${product_version} stop</programArguments>
+                            <programArguments>2uda-postgresql-${product_version} stop</programArguments>
                             <progressText>${msg(progress.stop_server)}</progressText>
                         </runProgram>
                         <removeUnixService>
-                            <name>2UDA-PostgreSQL-${product_version}</name>
+                            <name>2uda-postgresql-${product_version}</name>
                         </removeUnixService>
                     </actionList>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
@@ -1015,17 +1015,17 @@
                     <actionList>
                         <runProgram>
                             <program>systemctl</program>
-                            <programArguments>stop 2UDA-PostgreSQL-${product_version}</programArguments>
+                            <programArguments>stop 2uda-postgresql-${product_version}</programArguments>
                         </runProgram>
                         <runProgram>
                             <program>systemctl</program>
-                            <programArguments>disable 2UDA-PostgreSQL-${product_version}</programArguments>
+                            <programArguments>disable 2uda-postgresql-${product_version}</programArguments>
                         </runProgram>
                         <deleteFile>
-                            <path>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</path>
+                            <path>/etc/systemd/system/2uda-postgresql-${product_version}.service</path>
                         </deleteFile>
                         <deleteFile>
-                            <path>/etc/systemd/system/multi-user.target.wants/2UDA-PostgreSQL-${product_version}.service</path>
+                            <path>/etc/systemd/system/multi-user.target.wants/2uda-postgresql-${product_version}.service</path>
                         </deleteFile>
                         <runProgram>
                             <program>systemctl</program>
@@ -1294,7 +1294,7 @@ ${msg(existing.upgraded)}</explanation>
 
                 <addUnixService>
                     <description>Product description</description>
-                    <name>2UDA-PostgreSQL-${product_version}</name>
+                    <name>2uda-postgresql-${product_version}</name>
                     <program>${installdir}/PostgreSQL-${product_version}/postgresql.bin</program>
 		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
@@ -1313,7 +1313,7 @@ ${msg(existing.upgraded)}</explanation>
 
                 <runProgram>
                     <program>service</program>
-                    <programArguments>2UDA-PostgreSQL-${product_version} start</programArguments>
+                    <programArguments>2uda-postgresql-${product_version} start</programArguments>
                     <progressText>${msg(progress.start_server)}</progressText>
 		    <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
@@ -1331,7 +1331,7 @@ ${msg(existing.upgraded)}</explanation>
                 </runProgram>
 
                 <substitute>
-                    <files>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</files>
+                    <files>${installdir}/installer_scripts/2uda-postgresql-${product_version}.service</files>
                     <type>exact</type>
                     <substitutionList>
                         <substitution>
@@ -1350,8 +1350,8 @@ ${msg(existing.upgraded)}</explanation>
                 </substitute>
 
                 <copyFile>
-                    <destination>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</destination>
-                    <origin>${installdir}/installer_scripts/2UDA-PostgreSQL-${product_version}.service</origin>
+                    <destination>/etc/systemd/system/2uda-postgresql-${product_version}.service</destination>
+                    <origin>${installdir}/installer_scripts/2uda-postgresql-${product_version}.service</origin>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
                         <compareText>
@@ -1374,7 +1374,7 @@ ${msg(existing.upgraded)}</explanation>
 
                 <runProgram>
                     <program>systemctl</program>
-                    <programArguments>enable 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <programArguments>enable 2uda-postgresql-${product_version}.service</programArguments>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
                         <compareText>
@@ -1397,7 +1397,7 @@ ${msg(existing.upgraded)}</explanation>
 
                 <runProgram>
                     <program>systemctl</program>
-                    <programArguments>start 2UDA-PostgreSQL-${product_version}.service</programArguments>
+                    <programArguments>start 2uda-postgresql-${product_version}.service</programArguments>
                     <ruleEvaluationLogic>or</ruleEvaluationLogic>
                     <ruleList>
                         <compareText>
@@ -1526,7 +1526,7 @@ ${msg(existing.upgraded)}</explanation>
                 </setInstallerVariable>
                 <setInstallerVariable>
                     <name>servicename</name>
-                    <value>2UDA-PostgreSQL-${product_version}</value>
+                    <value>2uda-postgresql-${product_version}</value>
                     <ruleList>
                         <platformTest>
                             <type>linux</type>
@@ -1626,11 +1626,11 @@ ${msg(existing.upgraded)}</explanation>
                     <actionList>
                         <runProgram>
                             <program>service</program>
-                            <programArguments>2UDA-PostgreSQL-${product_version} stop</programArguments>
+                            <programArguments>2uda-postgresql-${product_version} stop</programArguments>
                             <progressText>${msg(progress.stop_server)}</progressText>
                         </runProgram>
                         <removeUnixService>
-                            <name>2UDA-PostgreSQL-${product_version}</name>
+                            <name>2uda-postgresql-${product_version}</name>
                         </removeUnixService>
                     </actionList>
 
@@ -1656,17 +1656,17 @@ ${msg(existing.upgraded)}</explanation>
                     <actionList>
                         <runProgram>
                             <program>systemctl</program>
-                            <programArguments>stop 2UDA-PostgreSQL-${product_version}</programArguments>
+                            <programArguments>stop 2uda-postgresql-${product_version}</programArguments>
                         </runProgram>
                         <runProgram>
                             <program>systemctl</program>
-                            <programArguments>disable 2UDA-PostgreSQL-${product_version}</programArguments>
+                            <programArguments>disable 2uda-postgresql-${product_version}</programArguments>
                         </runProgram>
                         <deleteFile>
-                            <path>/etc/systemd/system/2UDA-PostgreSQL-${product_version}.service</path>
+                            <path>/etc/systemd/system/2uda-postgresql-${product_version}.service</path>
                         </deleteFile>
                         <deleteFile>
-                            <path>/etc/systemd/system/multi-user.target.wants/2UDA-PostgreSQL-${product_version}.service</path>
+                            <path>/etc/systemd/system/multi-user.target.wants/2uda-postgresql-${product_version}.service</path>
                         </deleteFile>
                         <runProgram>
                             <program>systemctl</program>
@@ -1897,7 +1897,7 @@ ${msg(existing.upgraded)}</explanation>
                         <setInstallerVariableFromScriptOutput>
                             <abortOnError>0</abortOnError>
                             <exec>service</exec>
-                            <execArgs>2UDA-PostgreSQL-${product_version} status</execArgs>
+                            <execArgs>2uda-postgresql-${product_version} status</execArgs>
                             <name>service_availability</name>
                             <showMessageOnError>0</showMessageOnError>
                             <onErrorActionList>
@@ -1955,7 +1955,7 @@ ${msg(existing.upgraded)}</explanation>
                         <setInstallerVariableFromScriptOutput>
                             <abortOnError>0</abortOnError>
                             <exec>systemctl</exec>
-                            <execArgs>status 2UDA-PostgreSQL-${product_version}.service</execArgs>
+                            <execArgs>status 2uda-postgresql-${product_version}.service</execArgs>
                             <name>service_availability</name>
                             <showMessageOnError>0</showMessageOnError>
                             <onErrorActionList>
