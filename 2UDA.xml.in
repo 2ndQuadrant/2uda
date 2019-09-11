@@ -1747,7 +1747,7 @@ ${msg(existing.upgraded)}</explanation>
 
         <component>
             <name>orange</name>
-            <description>Orange</description>
+            <description>Orange3</description>
             <canBeEdited>1</canBeEdited>
             <detailedDescription>${msg(description.orange)}</detailedDescription>
             <selected>1</selected>
@@ -1775,7 +1775,7 @@ ${msg(existing.upgraded)}</explanation>
                     <platforms>osx</platforms>
                     <distributionFileList>
                         <distributionDirectory>
-                            <origin>${build_project_directory}/Builds/MacOS/Orange</origin>
+                            <origin>${build_project_directory}/Builds/MacOS/Orange3</origin>
                         </distributionDirectory>
                     </distributionFileList>
                 </folder>
@@ -1787,7 +1787,7 @@ ${msg(existing.upgraded)}</explanation>
                     <platforms>windows</platforms>
                     <distributionFileList>
                         <distributionDirectory>
-                            <origin>${build_project_directory}/Builds/Windows/Orange</origin>
+                            <origin>${build_project_directory}/Builds/Windows/Orange3</origin>
                         </distributionDirectory>
                     </distributionFileList>
                 </folder>
@@ -1799,7 +1799,7 @@ ${msg(existing.upgraded)}</explanation>
                     <platforms>linux-x64</platforms>
                     <distributionFileList>
                         <distributionDirectory>
-                            <origin>${build_project_directory}/Builds/Linux/Orange</origin>
+                            <origin>${build_project_directory}/Builds/Linux/Orange3</origin>
                         </distributionDirectory>
                     </distributionFileList>
 
