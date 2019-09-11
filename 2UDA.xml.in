@@ -781,6 +781,10 @@
                             <pattern>/path/to</pattern>
                             <value>${installdir}</value>
                         </substitution>
+			<substitution>
+                            <pattern>_PG_MAJOR_VERSION_</pattern>
+                            <value>${product_version}</value>
+                        </substitution>
                     </substitutionList>
                 </substitute>
 
