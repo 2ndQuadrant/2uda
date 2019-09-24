@@ -1759,16 +1759,18 @@ ${msg(existing.upgraded)}</explanation>
 
 	    <desktopShortcutList>
                 <shortcut>
-                    <comment>Launch Orange</comment>
-                    <name>2UDA Orange</name>
+                    <comment>Launch Orange3</comment>
+                    <name>2UDA Orange3</name>
                     <runAsAdmin>0</runAsAdmin>
                     <runInTerminal>0</runInTerminal>
-                    <windowsExec>${installdir}\Orange3\Python34\pythonw.exe</windowsExec>
+		    <windowsExec>${installdir}${slash}Orange3${slash}pythonw.exe</windowsExec>
                     <windowsExecArgs>-m Orange.canvas</windowsExecArgs>
-                    <windowsIcon>${installdir}\Orange3\Python34\share\Orange\canvas\icons\orange.ico</windowsIcon>
-                    <windowsPath>${installdir}\Orange3\Python34\</windowsPath>
+		    <windowsIcon>${installdir}${slash}Orange3${slash}share${slash}orange3${slash}icons${slash}orange.ico</windowsIcon>
+		    <windowsPath>${installdir}${slash}Orange3</windowsPath>
+		    <platforms>windows</platforms>
                 </shortcut>
             </desktopShortcutList>
+
 
             <folderList>
 
@@ -2210,6 +2212,15 @@ ${msg(existing.upgraded)}</explanation>
             <name>project.allowAddRemoveComponents</name>
             <value>1</value>
         </setInstallerVariable>
+
+    <!-- Create shortcut for Orange3 in MacOS desktop -->
+    <createSymLink target="${installdir}${slash}Orange3${slash}Orange3.app" linkName="~${slash}Desktop${slash}Orange3">
+    <ruleList>
+	<platformTest>
+		<type>osx</type>
+        </platformTest>
+    </ruleList>
+    </createSymLink>
 
     </postInstallationActionList>
 
