@@ -35,6 +35,8 @@ For more details please visit - https://www.2ndquadrant.com/en/resources/2uda/
 Connecting Orange to PostgreSQL
 ===============================
 
+NOTE: In order to establish connection with PostgreSQL you will need to install Psycopg2 first
+
 You can connect Orange to PostgreSQL by following these simple steps: 
 
 - Drag and drop the 'SQL Table' widget on the canvas
