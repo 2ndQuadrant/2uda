@@ -1861,6 +1861,22 @@ ${msg(existing.upgraded)}</explanation>
                     </substitutionList>
                 </substitute>
 
+		<substitute>
+                    <files>${installdir}${slash}Orange3${slash}Scripts${slash}conda.bat</files>
+                    <type>exact</type>
+                    <ruleList>
+			<platformTest>
+				<type>windows</type>
+			</platformTest>
+		    </ruleList>
+		    <substitutionList>
+			<substitution>
+				<pattern>_INSTALLATIONPATH_</pattern>
+				<value>${installdir}</value>
+                        </substitution>
+                    </substitutionList>
+                </substitute>
+
 	    </postInstallationActionList>
 
         </component>
